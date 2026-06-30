@@ -60,10 +60,6 @@
       <groupId>com.mercadona.kafka.schemas.thirdparty.employee</groupId>
       <artifactId>employee</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.mercadona.kafka.schemas.concepto.thirdparty.employee.employeedigitaldocument</groupId>
-      <artifactId>employeedigitaldocumentv0</artifactId>
-    </dependency>
 
   </dependencies>
 

@@ -3,6 +3,7 @@ package com.mercadona.employee.digitaldocument.application.services;
 import com.mercadona.employee.digitaldocument.application.ports.driven.BucketStoragePort;
 import com.mercadona.employee.digitaldocument.application.ports.driven.DigitalDocumentRepositoryPort;
 import com.mercadona.employee.digitaldocument.application.ports.driven.EmployeeEnrichmentPort;
+import com.mercadona.employee.digitaldocument.application.ports.driven.OutboxRepositoryPort;
 import com.mercadona.employee.digitaldocument.application.ports.driven.PdfGeneratorPort;
 import com.mercadona.employee.digitaldocument.domain.DigitalDocument;
 import com.mercadona.employee.digitaldocument.domain.DocumentStatus;
@@ -49,11 +50,14 @@ class DigitalDocumentConsumerUseCaseTest {
     @Mock
     private BucketStoragePort bucketStoragePort;
 
+    @Mock
+    private OutboxRepositoryPort outboxPublisherPort;
+
     private DigitalDocumentConsumerUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        useCase = new DigitalDocumentConsumerUseCase(repositoryPort, enrichmentPort, pdfGeneratorPort, bucketStoragePort);
+        useCase = new DigitalDocumentConsumerUseCase(repositoryPort, enrichmentPort, pdfGeneratorPort, bucketStoragePort, outboxPublisherPort);
     }
 
     @Test

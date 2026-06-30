@@ -1,5 +1,6 @@
 spring:
   flyway:
+    enabled: true
     locations: classpath:migration/versions
 
   datasource:

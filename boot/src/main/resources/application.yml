@@ -9,6 +9,9 @@ spring:
 
 fwkcna:
   kafka:
+    producer:
+      topics:
+        output-0: employee-digital-document
     enabled: true
     consumer:
       topics:

@@ -4,6 +4,7 @@ import com.mercadona.employee.digitaldocument.application.exceptions.DigitalDocu
 import com.mercadona.employee.digitaldocument.application.ports.driven.BucketStoragePort;
 import com.mercadona.employee.digitaldocument.application.ports.driven.DigitalDocumentRepositoryPort;
 import com.mercadona.employee.digitaldocument.application.ports.driven.EmployeeEnrichmentPort;
+import com.mercadona.employee.digitaldocument.application.ports.driven.OutboxRepositoryPort;
 import com.mercadona.employee.digitaldocument.application.ports.driven.PdfGeneratorPort;
 import com.mercadona.employee.digitaldocument.application.ports.driving.DigitalDocumentConsumerPort;
 import com.mercadona.employee.digitaldocument.domain.DigitalDocument;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -26,6 +26,7 @@ public class DigitalDocumentConsumerUseCase implements DigitalDocumentConsumerPo
     private final EmployeeEnrichmentPort employeeEnrichmentPort;
     private final PdfGeneratorPort pdfGeneratorPort;
     private final BucketStoragePort bucketStoragePort;
+    private final OutboxRepositoryPort outboxPublisherPort;
 
     @Override
     public void process(String employeeId, String managedGroupId) {
@@ -49,13 +50,10 @@ public class DigitalDocumentConsumerUseCase implements DigitalDocumentConsumerPo
 
         var employeeInfo = enrich(savedDocument);
         var pdfBytes = generatePdf(savedDocument, employeeInfo);
-        uploadToBucket(savedDocument, pdfBytes);
-
-        // TODO: Step 5 — write outbox transactionally with STORED state
+        uploadAndPublish(savedDocument, pdfBytes);
     }
 
-
-    private void uploadToBucket(DigitalDocument document, byte[] pdfBytes) {
+    private void uploadAndPublish(DigitalDocument document, byte[] pdfBytes) {
         try {
             var bucketPath = bucketStoragePort.upload(document.getDocumentId(), document.getEmployeeId(), pdfBytes);
             document.setBucketPath(bucketPath);
@@ -65,6 +63,14 @@ public class DigitalDocumentConsumerUseCase implements DigitalDocumentConsumerPo
             log.error("Bucket upload failed for documentId={}: {}", document.getDocumentId(), e.getMessage());
             markAsFailed(document, "STORAGE");
             throw e;
+        }
+
+        try {
+            outboxPublisherPort.publish(document);
+            log.info("Event written to outbox: documentId={}", document.getDocumentId());
+        } catch (Exception e) {
+            log.error("Outbox write failed for documentId={}: {}. Document remains STORED.", document.getDocumentId(), e.getMessage());
+            // TODO: batch reprocessor should retry the outbox write for STORED documents without outbox entry
         }
     }
 
@@ -119,4 +125,3 @@ public class DigitalDocumentConsumerUseCase implements DigitalDocumentConsumerPo
         digitalDocumentRepositoryPort.save(document);
     }
 }
-
