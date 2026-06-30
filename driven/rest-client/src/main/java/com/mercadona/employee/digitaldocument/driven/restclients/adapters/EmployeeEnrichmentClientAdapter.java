@@ -51,7 +51,7 @@ public class EmployeeEnrichmentClientAdapter implements EmployeeEnrichmentPort {
         } catch (HttpClientErrorException e) {
             log.error("Client error enriching employee employeeId={}, managedGroupId={}: status={}, body={}",
                     employeeId, managedGroupId, e.getStatusCode(), e.getResponseBodyAsString());
-            if (e.getStatusCode().value() == 404) {
+            if (e.getStatusCode().value() == 404 || e.getStatusCode().value() == 400) {
                 throw new EmployeeNotFoundException(employeeId, managedGroupId);
             }
             throw new RuntimeException("Enrichment API client error for employeeId=" + employeeId, e);

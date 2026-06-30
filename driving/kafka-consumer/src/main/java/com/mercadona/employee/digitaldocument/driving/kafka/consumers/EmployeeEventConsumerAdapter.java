@@ -1,5 +1,6 @@
 package com.mercadona.employee.digitaldocument.driving.kafka.consumers;
 
+import com.mercadona.employee.digitaldocument.application.exceptions.DigitalDocumentFailedException;
 import com.mercadona.employee.digitaldocument.application.exceptions.EmployeeNotFoundException;
 import com.mercadona.employee.digitaldocument.application.ports.driving.DigitalDocumentConsumerPort;
 import com.mercadona.framework.cna.commons.exception.MercadonaRuntimeException;
@@ -46,6 +47,9 @@ public class EmployeeEventConsumerAdapter
         } catch (EmployeeNotFoundException e) {
             log.warn("Employee not found, discarding event: employeeId={}, managedGroupId={}", employeeId, managedGroupId);
             throw new NotRetryableException("Employee not found, cannot process event.");
+        } catch (DigitalDocumentFailedException e) {
+            log.warn("Document already failed, discarding Kafka event: {}", e.getMessage());
+            throw new NotRetryableException("Document in FAILED state, Kafka event discarded.");
         } catch (BlockingLimitedRetryableException e) {
             throw new BlockingLimitedRetryableException("Blocking limited error.");
         } catch (BlockingUnlimitedRetryableException e) {

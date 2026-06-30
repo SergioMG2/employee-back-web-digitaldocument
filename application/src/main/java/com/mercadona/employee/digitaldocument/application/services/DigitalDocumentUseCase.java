@@ -1,5 +1,6 @@
 package com.mercadona.employee.digitaldocument.application.services;
 
+import com.mercadona.employee.digitaldocument.application.exceptions.DigitalDocumentFailedException;
 import com.mercadona.employee.digitaldocument.application.ports.driven.BucketStoragePort;
 import com.mercadona.employee.digitaldocument.application.ports.driven.DigitalDocumentRepositoryPort;
 import com.mercadona.employee.digitaldocument.application.ports.driven.EmployeeEnrichmentPort;
@@ -31,8 +32,14 @@ public class DigitalDocumentUseCase implements DigitalDocumentConsumerPort {
         var existing = digitalDocumentRepositoryPort.findByEmployeeIdAndManagedGroupId(employeeId, managedGroupId);
 
         if (existing.isPresent()) {
+            var document = existing.get();
+            if (DocumentStatus.FAILED.equals(document.getStatus())) {
+                log.warn("Document in FAILED state for employeeId={}, managedGroupId={}, documentId={}, failedStep={}. Discarding Kafka event — batch reprocessor will handle it.",
+                        employeeId, managedGroupId, document.getDocumentId(), document.getFailedStep());
+                throw new DigitalDocumentFailedException(document.getDocumentId(), document.getFailedStep());
+            }
             log.info("Document already exists for employeeId={}, managedGroupId={}, documentId={}. Ignoring event.",
-                    employeeId, managedGroupId, existing.get().getDocumentId());
+                    employeeId, managedGroupId, document.getDocumentId());
             return;
         }
 
