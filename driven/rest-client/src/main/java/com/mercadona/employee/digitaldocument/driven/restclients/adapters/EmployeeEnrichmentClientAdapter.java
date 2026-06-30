@@ -1,5 +1,6 @@
 package com.mercadona.employee.digitaldocument.driven.restclients.adapters;
 
+import com.mercadona.employee.digitaldocument.application.exceptions.EmployeeNotFoundException;
 import com.mercadona.employee.digitaldocument.application.ports.driven.EmployeeEnrichmentPort;
 import com.mercadona.employee.digitaldocument.domain.EmployeeInfo;
 import com.mercadona.employee.digitaldocument.driven.restclients.dto.AiCertificationResponseDTO;
@@ -50,7 +51,10 @@ public class EmployeeEnrichmentClientAdapter implements EmployeeEnrichmentPort {
         } catch (HttpClientErrorException e) {
             log.error("Client error enriching employee employeeId={}, managedGroupId={}: status={}, body={}",
                     employeeId, managedGroupId, e.getStatusCode(), e.getResponseBodyAsString());
-            throw new RuntimeException("Employee not found during enrichment: employeeId=" + employeeId, e);
+            if (e.getStatusCode().value() == 404) {
+                throw new EmployeeNotFoundException(employeeId, managedGroupId);
+            }
+            throw new RuntimeException("Enrichment API client error for employeeId=" + employeeId, e);
         } catch (HttpServerErrorException e) {
             log.error("Server error enriching employee employeeId={}, managedGroupId={}: status={}",
                     employeeId, managedGroupId, e.getStatusCode());

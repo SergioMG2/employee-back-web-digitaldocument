@@ -22,3 +22,14 @@ spring:
 clients:
   cardgenerator:
     base-path: http://localhost:8081
+
+fwkcna:
+  buckets:
+    - id: digital-documents
+      bucket-name: digital-documents
+      enabled: true
+      url: http://localhost:9000
+      provider: minio
+      credentials:
+        access-key: minioadmin
+        secret-key: minioadmin

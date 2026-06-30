@@ -1,5 +1,6 @@
 package com.mercadona.employee.digitaldocument.driving.kafka.consumers;
 
+import com.mercadona.employee.digitaldocument.application.exceptions.EmployeeNotFoundException;
 import com.mercadona.employee.digitaldocument.application.ports.driving.DigitalDocumentConsumerPort;
 import com.mercadona.framework.cna.commons.exception.MercadonaRuntimeException;
 import com.mercadona.framework.cna.lib.kafka.consumers.KafkaConsumerListener;
@@ -31,22 +32,25 @@ public class EmployeeEventConsumerAdapter
 
     @Override
     public void consume(ConsumerRecord<EmployeeEventPublicKey, EmployeeEventPublicValue> consumerRecord) {
+        String employeeId = null;
+        String managedGroupId = null;
+
         try {
-            var employeeId = consumerRecord.key().getId();
-            var managedGroupId = consumerRecord.key().getManagedGroupId().getId();
+            employeeId = consumerRecord.key().getId();
+            managedGroupId = consumerRecord.key().getManagedGroupId().getId();
 
             log.info("Received employee event: employeeId={}, managedGroupId={}", employeeId, managedGroupId);
 
             consumerPort.process(employeeId, managedGroupId);
 
+        } catch (EmployeeNotFoundException e) {
+            log.warn("Employee not found, discarding event: employeeId={}, managedGroupId={}", employeeId, managedGroupId);
+            throw new NotRetryableException("Employee not found, cannot process event.");
         } catch (BlockingLimitedRetryableException e) {
-            // TODO: replace with your domain exception (e.g. catch (BusinessLimitedBlockingException e))
             throw new BlockingLimitedRetryableException("Blocking limited error.");
         } catch (BlockingUnlimitedRetryableException e) {
-            // TODO: replace with your domain exception (e.g. catch (BusinessUnlimitedBlockingException e))
             throw new BlockingUnlimitedRetryableException("Blocking unlimited error.");
         } catch (NotRetryableException e) {
-            // TODO: replace with your domain exception (e.g. catch (BusinessNotRetryableException e))
             throw new NotRetryableException("Not retryable exception.");
         } catch (Exception e) {
             // Any exception not mapped to a FWK Kafka exception triggers limited blocking retries by default

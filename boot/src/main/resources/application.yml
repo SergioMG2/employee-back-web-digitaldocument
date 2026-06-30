@@ -16,6 +16,15 @@ fwkcna:
           employee:
             main: thirdparty.employee.employee.event.public.v0.table.cpd
             group-id: thirdparty_employee_employee_employee_back_digital_document
+  buckets:
+    - id: digital-documents
+      bucket-name: ${BUCKET_NAME:digital-documents}
+      enabled: true
+      url: ${BUCKET_ENDPOINT}   # TODO: set per environment
+      provider: gcs             # TODO: change to netapp if needed
+      credentials:
+        access-key: ${BUCKET_ACCESS_KEY}
+        secret-key: ${BUCKET_SECRET_KEY}
 
 management:
   endpoint:
@@ -31,7 +40,6 @@ management:
     web:
       exposure:
         include: [ info, health, metrics, prometheus ]
-
 
 server:
   port: 8080
