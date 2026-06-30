@@ -38,6 +38,16 @@
         <artifactId>employee-back-web-digitaldocument-kafka-consumer</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.mercadona.employee.digitaldocument</groupId>
+        <artifactId>employee-back-web-digitaldocument-rest-client</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.mercadona.employee.digitaldocument</groupId>
+        <artifactId>employee-back-web-digitaldocument-pdf-generator</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <!-- Kafka -->
       <dependency>
@@ -60,6 +70,8 @@
     <module>driving/api-rest</module>
     <module>driving/kafka-consumer</module>
     <module>driven/postgres-repository</module>
+    <module>driven/rest-client</module>
+    <module>driven/pdf-generator</module>
     <!-- Runtime -->
     <module>boot</module>
   </modules>

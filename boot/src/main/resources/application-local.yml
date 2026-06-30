@@ -18,3 +18,7 @@ spring:
       properties:
         key.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
         value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+
+clients:
+  cardgenerator:
+    base-path: http://localhost:8081

@@ -32,6 +32,16 @@
     </dependency>
 
     <dependency>
+      <groupId>com.mercadona.employee.digitaldocument</groupId>
+      <artifactId>employee-back-web-digitaldocument-rest-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.mercadona.employee.digitaldocument</groupId>
+      <artifactId>employee-back-web-digitaldocument-pdf-generator</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>com.mercadona.framework.cna</groupId>
       <artifactId>fwkcna-starter-observability-poe</artifactId>
     </dependency>

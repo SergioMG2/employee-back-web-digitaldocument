@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>employee-back-web-digitaldocument-pdf-generator</artifactId>
+  <packaging>jar</packaging>
+  <name>employee-back-web-digitaldocument-pdf-generator</name>
+
+  <parent>
+    <groupId>com.mercadona.employee.digitaldocument</groupId>
+    <artifactId>employee-back-web-digitaldocument</artifactId>
+    <version>1.0.0</version>
+    <relativePath>../../pom.xml</relativePath>
+  </parent>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>com.mercadona.employee.digitaldocument</groupId>
+      <artifactId>employee-back-web-digitaldocument-application</artifactId>
+    </dependency>
+
+    <!-- iText 7 — PDF generation -->
+    <dependency>
+      <groupId>com.itextpdf</groupId>
+      <artifactId>kernel</artifactId>
+      <version>7.2.5</version>
+    </dependency>
+    <dependency>
+      <groupId>com.itextpdf</groupId>
+      <artifactId>layout</artifactId>
+      <version>7.2.5</version>
+    </dependency>
+
+  </dependencies>
+
+</project>
