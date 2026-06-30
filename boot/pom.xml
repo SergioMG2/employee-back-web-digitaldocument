@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>employee-back-web-digitaldocument-boot</artifactId>
+  <packaging>jar</packaging>
+  <name>employee-back-web-digitaldocument-boot</name>
+
+
+  <parent>
+    <groupId>com.mercadona.employee.digitaldocument</groupId>
+    <artifactId>employee-back-web-digitaldocument</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.mercadona.employee.digitaldocument</groupId>
+      <artifactId>employee-back-web-digitaldocument-api-rest</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.mercadona.employee.digitaldocument</groupId>
+      <artifactId>employee-back-web-digitaldocument-postgres-repository</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.mercadona.framework.cna</groupId>
+      <artifactId>fwkcna-starter-observability-poe</artifactId>
+    </dependency>
+
+    <!-- Kafka -->
+    <dependency>
+      <groupId>com.mercadona.framework.cna</groupId>
+      <artifactId>fwkcna-starter-kafka</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mercadona.kafka.schemas.thirdparty.employee</groupId>
+      <artifactId>employee</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mercadona.kafka.schemas.concepto.thirdparty.employee.employeedigitaldocument</groupId>
+      <artifactId>employeedigitaldocumentv0</artifactId>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Provides support to package and run applications "in-place" -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+
+       <!-- Assembly Build info on final artefact-->
+      <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+			</plugin>
+    </plugins>
+  </build>
+
+
+
+</project>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>employee-back-web-digitaldocument-api-rest</artifactId>
+  <packaging>jar</packaging>
+  <name>employee-back-web-digitaldocument-api-rest</name>
+
+  <parent>
+    <groupId>com.mercadona.employee.digitaldocument</groupId>
+    <artifactId>employee-back-web-digitaldocument</artifactId>
+    <version>1.0.0</version>
+    <relativePath>../../pom.xml</relativePath>
+  </parent>
+
+  <properties>
+    <example.api.version>5.0.0</example.api.version>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>com.mercadona.employee.digitaldocument</groupId>
+      <artifactId>employee-back-web-digitaldocument-application</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.mercadona.framework.cna</groupId>
+      <artifactId>fwkcna-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.mercadona.framework.cna</groupId>
+      <artifactId>fwkcna-starter-security</artifactId>
+    </dependency>
+
+    <dependency>
+			<groupId>com.mercadona.framework.cna.api.demotest.arq.web</groupId>
+			<artifactId>arq-web-api-server-cna-21</artifactId>
+			<version>${example.api.version}</version>
+		</dependency>
+
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+</project>
