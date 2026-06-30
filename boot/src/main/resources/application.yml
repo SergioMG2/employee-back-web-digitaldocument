@@ -20,8 +20,8 @@ fwkcna:
     - id: digital-documents
       bucket-name: ${BUCKET_NAME:digital-documents}
       enabled: true
-      url: ${BUCKET_ENDPOINT}   # TODO: set per environment
-      provider: gcs             # TODO: change to netapp if needed
+      url: ${BUCKET_ENDPOINT}
+      provider: gcs
       credentials:
         access-key: ${BUCKET_ACCESS_KEY}
         secret-key: ${BUCKET_SECRET_KEY}

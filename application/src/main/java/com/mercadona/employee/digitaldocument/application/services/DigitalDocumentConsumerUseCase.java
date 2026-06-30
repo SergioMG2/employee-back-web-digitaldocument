@@ -20,7 +20,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class DigitalDocumentUseCase implements DigitalDocumentConsumerPort {
+public class DigitalDocumentConsumerUseCase implements DigitalDocumentConsumerPort {
 
     private final DigitalDocumentRepositoryPort digitalDocumentRepositoryPort;
     private final EmployeeEnrichmentPort employeeEnrichmentPort;

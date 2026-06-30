@@ -9,15 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-/**
- * Spring Data JPA repository for {@link DigitalDocumentMO}.
- */
 @Repository
 public interface DigitalDocumentMOJpaRepository extends JpaRepository<DigitalDocumentMO, Long> {
-
     Optional<DigitalDocumentMO> findByDocumentId(String documentId);
-
+    Optional<DigitalDocumentMO> findByEmployeeId(String employeeId);
     Optional<DigitalDocumentMO> findByEmployeeIdAndManagedGroupId(String employeeId, String managedGroupId);
-
     Page<DigitalDocumentMO> findByStatus(DocumentStatusMOEnum status, Pageable pageable);
 }

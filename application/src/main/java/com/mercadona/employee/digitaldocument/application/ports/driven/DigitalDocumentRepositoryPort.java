@@ -8,13 +8,9 @@ import java.util.Optional;
 
 
 public interface DigitalDocumentRepositoryPort {
-
-
     DigitalDocument save(DigitalDocument digitalDocument);
-
     Optional<DigitalDocument> findByDocumentId(String documentId);
-
+    Optional<DigitalDocument> findByEmployeeId(String employeeId);
     Optional<DigitalDocument> findByEmployeeIdAndManagedGroupId(String employeeId, String managedGroupId);
-
     MercadonaPage<DigitalDocument> findByStatus(DocumentStatus status, Integer pageNumber, Integer pageSize);
 }

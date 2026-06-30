@@ -36,6 +36,12 @@ public class DigitalDocumentRepositoryAdapter implements DigitalDocumentReposito
     }
 
     @Override
+    public Optional<DigitalDocument> findByEmployeeId(String employeeId) {
+        return repository.findByEmployeeId(employeeId)
+                .map(mapper::fromModel);
+    }
+
+    @Override
     public Optional<DigitalDocument> findByEmployeeIdAndManagedGroupId(String employeeId, String managedGroupId) {
         return repository.findByEmployeeIdAndManagedGroupId(employeeId, managedGroupId)
                 .map(mapper::fromModel);

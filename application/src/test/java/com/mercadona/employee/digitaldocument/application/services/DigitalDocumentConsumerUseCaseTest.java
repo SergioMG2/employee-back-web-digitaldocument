@@ -29,10 +29,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit tests for {@link DigitalDocumentUseCase}.
+ * Unit tests for {@link DigitalDocumentConsumerUseCase}.
  */
 @ExtendWith(MockitoExtension.class)
-class DigitalDocumentUseCaseTest {
+class DigitalDocumentConsumerUseCaseTest {
 
     private static final String EMPLOYEE_ID      = "EMP001";
     private static final String MANAGED_GROUP_ID = "GROUP001";
@@ -49,11 +49,11 @@ class DigitalDocumentUseCaseTest {
     @Mock
     private BucketStoragePort bucketStoragePort;
 
-    private DigitalDocumentUseCase useCase;
+    private DigitalDocumentConsumerUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        useCase = new DigitalDocumentUseCase(repositoryPort, enrichmentPort, pdfGeneratorPort, bucketStoragePort);
+        useCase = new DigitalDocumentConsumerUseCase(repositoryPort, enrichmentPort, pdfGeneratorPort, bucketStoragePort);
     }
 
     @Test
