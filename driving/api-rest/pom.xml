@@ -28,11 +28,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.mercadona.framework.cna</groupId>
-      <artifactId>fwkcna-starter-security</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-test</artifactId>
       <scope>test</scope>

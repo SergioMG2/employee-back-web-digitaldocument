@@ -1,0 +1,56 @@
+{
+  "info": {
+    "name": "Employee Digital Document API",
+    "description": "API for querying AI certification digital documents",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "PDF por empleado",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/digital-documents/employees/{{employee_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["digital-documents", "employees", "{{employee_id}}"]
+        },
+        "description": "Devuelve el PDF del documento digital del empleado. Visualizable inline en Postman."
+      },
+      "response": []
+    },
+    {
+      "name": "PDF por documentId",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/digital-documents/{{document_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["digital-documents", "{{document_id}}"]
+        },
+        "description": "Devuelve el PDF del documento por su UUID. Rellena la variable document_id en el entorno."
+      },
+      "response": []
+    },
+    {
+      "name": "Estado del documento",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/digital-documents/{{document_id}}/status",
+          "host": ["{{base_url}}"],
+          "path": ["digital-documents", "{{document_id}}", "status"]
+        },
+        "description": "Devuelve el estado actual del documento y, si ha fallado, en qué paso."
+      },
+      "response": []
+    }
+  ]
+}

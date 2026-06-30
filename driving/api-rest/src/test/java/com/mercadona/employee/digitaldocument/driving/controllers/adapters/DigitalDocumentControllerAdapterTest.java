@@ -5,7 +5,6 @@ import com.mercadona.employee.digitaldocument.application.exceptions.DocumentPdf
 import com.mercadona.employee.digitaldocument.application.ports.driving.DigitalDocumentServicePort;
 import com.mercadona.employee.digitaldocument.domain.DigitalDocument;
 import com.mercadona.employee.digitaldocument.domain.DocumentStatus;
-import com.mercadona.employee.digitaldocument.driving.controllers.config.WebSecurityConfigurer;
 import com.mercadona.employee.digitaldocument.driving.controllers.dto.DocumentStatusDTO;
 import com.mercadona.employee.digitaldocument.driving.controllers.dto.DocumentStatusResponseDTO;
 import com.mercadona.employee.digitaldocument.driving.controllers.mappers.DigitalDocumentDTOMapper;
@@ -25,11 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Unit tests for {@link DigitalDocumentControllerAdapter}.
- */
+
 @WebMvcTest(DigitalDocumentControllerAdapter.class)
-@Import(WebSecurityConfigurer.class)
 class DigitalDocumentControllerAdapterTest {
 
     private static final String EMPLOYEE_ID  = "EMP001";

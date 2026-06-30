@@ -13,12 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * REST controller adapter for the digital document API.
- *
- * <p>Exposes endpoints for retrieving PDF documents and querying document status.
- * Delegates business logic to {@link DigitalDocumentServicePort}.
- */
 @Slf4j
 @RestController
 @AllArgsConstructor

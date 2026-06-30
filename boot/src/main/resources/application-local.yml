@@ -24,6 +24,8 @@ clients:
     base-path: http://localhost:8081
 
 fwkcna:
+  security:
+    enabled: false
   buckets:
     - id: digital-documents
       bucket-name: digital-documents
