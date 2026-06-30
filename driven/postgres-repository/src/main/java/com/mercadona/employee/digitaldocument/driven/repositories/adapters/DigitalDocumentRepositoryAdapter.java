@@ -14,13 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-/**
- * JPA adapter that implements {@link DigitalDocumentRepositoryPort}.
- *
- * <p>Translates between the domain model and the JPA entity using
- * {@link DigitalDocumentMapper}, and delegates persistence to
- * {@link DigitalDocumentMOJpaRepository}.
- */
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -29,9 +22,6 @@ public class DigitalDocumentRepositoryAdapter implements DigitalDocumentReposito
     private final DigitalDocumentMOJpaRepository repository;
     private final DigitalDocumentMapper mapper;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public DigitalDocument save(DigitalDocument digitalDocument) {
         var mo = mapper.toModel(digitalDocument);
@@ -39,27 +29,18 @@ public class DigitalDocumentRepositoryAdapter implements DigitalDocumentReposito
         return mapper.fromModel(saved);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Optional<DigitalDocument> findByDocumentId(String documentId) {
         return repository.findByDocumentId(documentId)
                 .map(mapper::fromModel);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Optional<DigitalDocument> findByEmployeeIdAndManagedGroupId(String employeeId, String managedGroupId) {
         return repository.findByEmployeeIdAndManagedGroupId(employeeId, managedGroupId)
                 .map(mapper::fromModel);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public MercadonaPage<DigitalDocument> findByStatus(DocumentStatus status, Integer pageNumber, Integer pageSize) {
         var statusMO = DocumentStatusMOEnum.valueOf(status.name());

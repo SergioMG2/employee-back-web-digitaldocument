@@ -15,11 +15,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
-/**
- * JPA entity mapping to the {@code o_digital_documents} table.
- *
- * <p>Represents the persisted lifecycle state of a digital employee document.
- */
+
 @Data
 @Entity
 @Builder
