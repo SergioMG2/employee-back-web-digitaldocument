@@ -3,7 +3,7 @@ spring:
     locations: classpath:migration/versions
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/examples
+    url: jdbc:postgresql://localhost:5433/prueba
     username: sa
     password: root
     driver-class-name: org.postgresql.Driver
