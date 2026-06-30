@@ -14,8 +14,8 @@ fwkcna:
       topics:
         groups:
           employee:
-            main: employee
-            group-id: employee-digital-document-consumer-group
+            main: thirdparty.employee.employee.event.public.v0.table.cpd
+            group-id: thirdparty_employee_employee_employee_back_digital_document
 
 management:
   endpoint:
