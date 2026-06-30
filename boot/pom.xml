@@ -27,6 +27,11 @@
     </dependency>
 
     <dependency>
+      <groupId>com.mercadona.employee.digitaldocument</groupId>
+      <artifactId>employee-back-web-digitaldocument-kafka-consumer</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>com.mercadona.framework.cna</groupId>
       <artifactId>fwkcna-starter-observability-poe</artifactId>
     </dependency>

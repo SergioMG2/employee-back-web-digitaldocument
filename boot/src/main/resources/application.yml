@@ -1,8 +1,22 @@
 spring:
   application:
     name: employee-back-web-digitaldocument
+  kafka:
+    consumer:
+      properties:
+        key.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+        value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
 
-# Actuator endpoints configuration
+fwkcna:
+  kafka:
+    enabled: true
+    consumer:
+      topics:
+        groups:
+          employee:
+            main: employee
+            group-id: employee-digital-document-consumer-group
+
 management:
   endpoint:
     metrics:

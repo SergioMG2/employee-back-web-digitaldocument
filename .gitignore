@@ -174,3 +174,8 @@ pom.xml.versionsBackup
 **/requirements.lock
 **/charts/*.tgz
 **/charts/**/*.tgz
+# Atenea skills management
+.claude/skills/update-*
+.claude/skills/atenea-*
+.claude/skills/commons-*
+.claude/skills/fwk-*

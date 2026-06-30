@@ -7,3 +7,14 @@ spring:
     username: sa
     password: root
     driver-class-name: org.postgresql.Driver
+
+  kafka:
+    properties:
+      schema.registry.url: http://localhost:8085
+      security:
+        protocol: "PLAINTEXT"
+    consumer:
+      bootstrap-servers: localhost:29092
+      properties:
+        key.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+        value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
