@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Map;
 
 
@@ -36,7 +37,21 @@ public class BucketStorageAdapter implements BucketStoragePort {
                     CONTENT_TYPE_PDF, Map.of());
             return destinationPath;
         } catch (Exception e) {
-            throw new RuntimeException(e); // TODO: Replace with corresponding business exception
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public byte[] download(String bucketPath) {
+        log.info("Downloading PDF from bucket: path={}", bucketPath);
+
+        try {
+            var inputStream = bucketService.getInputStream(bucketName, bucketPath);
+            return inputStream.readAllBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

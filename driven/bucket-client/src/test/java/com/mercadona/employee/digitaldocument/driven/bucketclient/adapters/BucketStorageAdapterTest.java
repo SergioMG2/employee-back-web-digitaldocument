@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.ByteArrayInputStream;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,6 +57,25 @@ class BucketStorageAdapterTest {
 
         verify(bucketService).upload(eq(BUCKET_NAME), any(ByteSource.class),
                 eq("documents/EMP001/doc-uuid-001.pdf"), eq("application/pdf"), any(Map.class));
+    }
+
+    @Test
+    void download_validPath_shouldReturnPdfBytes() throws Exception {
+        var expectedBytes = new byte[]{1, 2, 3};
+        when(bucketService.getInputStream(eq(BUCKET_NAME), eq("documents/EMP001/doc-uuid-001.pdf")))
+                .thenReturn(new ByteArrayInputStream(expectedBytes));
+
+        var result = adapter.download("documents/EMP001/doc-uuid-001.pdf");
+
+        assertThat(result).isEqualTo(expectedBytes);
+    }
+
+    @Test
+    void download_bucketServiceThrows_shouldWrapAsRuntimeException() throws Exception {
+        when(bucketService.getInputStream(any(), any())).thenThrow(new RuntimeException("bucket error"));
+
+        assertThatThrownBy(() -> adapter.download("documents/EMP001/doc.pdf"))
+                .isInstanceOf(RuntimeException.class);
     }
 
     @Test
