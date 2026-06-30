@@ -1,0 +1,200 @@
+openapi: 3.0.1
+info:
+  title: Employee Digital Document API
+  description: API for querying AI certification digital documents for employees
+  version: 1.0.0
+tags:
+  - name: digital-documents
+    description: Digital Document Controller
+
+paths:
+
+  /digital-documents/employees/{employeeId}:
+    get:
+      tags:
+        - digital-documents
+      summary: Get the PDF document for a specific employee
+      description: Returns the generated AI certification PDF for the given employee
+      operationId: getPdfByEmployeeId
+      parameters:
+        - name: employeeId
+          in: path
+          description: Employee identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: PDF document
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        404:
+          description: Document not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResourceResponse'
+        409:
+          description: Document exists but PDF is not yet available (not in STORED state)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResourceResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResourceResponse'
+      security:
+        - adfs: [ ]
+      x-mercadona-security:
+        operationgroups:
+          - DCNA_GET_PdfEmpleado
+
+  /digital-documents/{documentId}:
+    get:
+      tags:
+        - digital-documents
+      summary: Get the PDF document by its identifier
+      description: Returns the generated AI certification PDF for the given document ID
+      operationId: getPdfByDocumentId
+      parameters:
+        - name: documentId
+          in: path
+          description: Document unique identifier (UUID)
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: PDF document
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        404:
+          description: Document not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResourceResponse'
+        409:
+          description: Document exists but PDF is not yet available (not in STORED state)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResourceResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResourceResponse'
+      security:
+        - adfs: [ ]
+      x-mercadona-security:
+        operationgroups:
+          - DCNA_GET_PdfDocumento
+
+  /digital-documents/{documentId}/status:
+    get:
+      tags:
+        - digital-documents
+      summary: Get the current status of a document
+      description: Returns the lifecycle status of the document and, if failed, the step where it failed
+      operationId: getDocumentStatus
+      parameters:
+        - name: documentId
+          in: path
+          description: Document unique identifier (UUID)
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Document status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentStatusResponse'
+        404:
+          description: Document not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResourceResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResourceResponse'
+      security:
+        - adfs: [ ]
+      x-mercadona-security:
+        operationgroups:
+          - DCNA_GET_EstadoDocumento
+
+  # TODO: GET /digital-documents?status={status} — list documents filtered by status
+
+components:
+  schemas:
+
+    DocumentStatusResponse:
+      title: DocumentStatusResponse
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/DocumentStatus'
+
+    DocumentStatus:
+      title: DocumentStatus
+      type: object
+      properties:
+        documentId:
+          type: string
+          description: Unique identifier of the document
+        employeeId:
+          type: string
+          description: Employee identifier
+        status:
+          type: string
+          description: Current lifecycle status
+          enum:
+            - PENDING
+            - ENRICHED
+            - PDF_GENERATED
+            - STORED
+            - FAILED
+        failedStep:
+          type: string
+          nullable: true
+          description: Step where the process failed. Only present when status is FAILED.
+
+    ErrorResource:
+      title: ErrorResource
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+
+    ErrorResourceResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorResource'
+
+  securitySchemes:
+    adfs:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ""
+          scopes: { }

@@ -15,10 +15,6 @@
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <properties>
-    <example.api.version>5.0.0</example.api.version>
-  </properties>
-
   <dependencies>
 
     <dependency>
@@ -35,12 +31,6 @@
       <groupId>com.mercadona.framework.cna</groupId>
       <artifactId>fwkcna-starter-security</artifactId>
     </dependency>
-
-    <dependency>
-			<groupId>com.mercadona.framework.cna.api.demotest.arq.web</groupId>
-			<artifactId>arq-web-api-server-cna-21</artifactId>
-			<version>${example.api.version}</version>
-		</dependency>
 
     <dependency>
       <groupId>org.springframework.security</groupId>
