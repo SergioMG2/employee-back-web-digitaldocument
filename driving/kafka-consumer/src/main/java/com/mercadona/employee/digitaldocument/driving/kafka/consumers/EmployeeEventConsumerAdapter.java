@@ -1,5 +1,6 @@
 package com.mercadona.employee.digitaldocument.driving.kafka.consumers;
 
+import com.mercadona.employee.digitaldocument.application.ports.driving.DigitalDocumentConsumerPort;
 import com.mercadona.framework.cna.commons.exception.MercadonaRuntimeException;
 import com.mercadona.framework.cna.lib.kafka.consumers.KafkaConsumerListener;
 import com.mercadona.framework.cna.lib.kafka.exceptions.BlockingLimitedRetryableException;
@@ -18,21 +19,25 @@ import thirdparty.employee.employee.EmployeeEventPublicValue;
 public class EmployeeEventConsumerAdapter
         extends KafkaConsumerListener<EmployeeEventPublicKey, EmployeeEventPublicValue> {
 
-    // TODO: inject DigitalDocumentOrchestratorPort once defined in the application module
+    private final DigitalDocumentConsumerPort consumerPort;
+
     protected EmployeeEventConsumerAdapter(
             @Value("${fwkcna.kafka.consumer.topics.groups.employee.main}") String[] topics,
-            @Value("${fwkcna.kafka.consumer.topics.groups.employee.group-id}") String groupId) {
+            @Value("${fwkcna.kafka.consumer.topics.groups.employee.group-id}") String groupId,
+            DigitalDocumentConsumerPort consumerPort) {
         super(topics, groupId);
+        this.consumerPort = consumerPort;
     }
 
     @Override
     public void consume(ConsumerRecord<EmployeeEventPublicKey, EmployeeEventPublicValue> consumerRecord) {
         try {
-            log.info("Received employee event: employeeId={}, managedGroupId={}",
-                    consumerRecord.key().getId(),
-                    consumerRecord.key().getManagedGroupId());
+            var employeeId = consumerRecord.key().getId();
+            var managedGroupId = consumerRecord.key().getManagedGroupId().getId();
 
-            // TODO: mappear el consumo a objeto de dominio
+            log.info("Received employee event: employeeId={}, managedGroupId={}", employeeId, managedGroupId);
+
+            consumerPort.process(employeeId, managedGroupId);
 
         } catch (BlockingLimitedRetryableException e) {
             // TODO: replace with your domain exception (e.g. catch (BusinessLimitedBlockingException e))
